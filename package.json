@@ -4,9 +4,14 @@
   "description": "",
   "main": "index.js",
   "bin": {
-      "ubl": "index.js"
+    "ubl": "index.js"
   },
-  "keywords": ["uberall"],
+  "keywords": [
+    "uberall"
+  ],
   "author": "@amnrst",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "jira-client": "^6.21.1"
+  }
 }
