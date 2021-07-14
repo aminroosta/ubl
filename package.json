@@ -12,6 +12,7 @@
   "author": "@amnrst",
   "license": "ISC",
   "dependencies": {
-    "jira-client": "^6.21.1"
+    "jira-client": "^6.21.1",
+    "prompts": "^2.4.1"
   }
 }

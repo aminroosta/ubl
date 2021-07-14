@@ -3,7 +3,7 @@ var JiraApi = require('jira-client');
 /**
  * creates a feature branch given the jira issue id
  */
-async function create_branch({
+async function get_issue({
 	issue_id,
 	username,
 	password
@@ -23,10 +23,10 @@ async function create_branch({
 	if(issue_id * 1 == issue_id) {
 		issue_id = `UB-${issue_id}`;
 	}
+
 	const issue = await jira.findIssue(issue_id);
-	console.log(JSON.stringify(issue.fields, null, 2));
 	return issue;
 }
 
 
-module.exports = { create_branch };
+module.exports = { get_issue };
