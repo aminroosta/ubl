@@ -6,12 +6,12 @@ const localStorage = require('./src/localstorage.js');
 
 
 async function run() {
-    let credentials = localStorage.getItem('jira');
-    if(!credentials) {
-        credentials = await get_credentials({ website_name: 'jira' });
+	let credentials = localStorage.getItem('jira');
+	if(!credentials) {
+		credentials = await get_credentials({ website_name: 'jira' });
 		localStorage.setItem('jira', credentials);
-    }
-    console.log(credentials);
+	}
+	console.log(credentials);
 }
 
 run();
