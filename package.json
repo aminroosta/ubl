@@ -12,6 +12,7 @@
   "author": "@amnrst",
   "license": "ISC",
   "dependencies": {
+    "commander": "^8.0.0",
     "cryptr": "^6.0.2",
     "jira-client": "^6.21.1",
     "prompts": "^2.4.1"

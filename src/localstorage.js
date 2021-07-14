@@ -22,8 +22,15 @@ function setItem(key, object) {
 	const encrypted_json = cryptr.encrypt(json);
 	fs.writeFileSync(file_path, encrypted_json, 'utf8');
 };
+function deleteItem(key) {
+	const file_path = path.join(__dirname, `${key}.crypt`);
+	if(fs.existsSync(file_path)) {
+		fs.unlinkSync(file_path);
+	}
+};
 
 module.exports = {
 	getItem,
-	setItem
+	setItem,
+	deleteItem,
 };
