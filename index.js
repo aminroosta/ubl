@@ -18,18 +18,19 @@ async function run({ options }) {
 }
 
 program
-	.version('0.2.0')
 	.option('-r, --reset', 'reset & delete the user account info')
 	.option(
 		'-b, --branch <jira_ticket_id>',
 		'creates a feature branch from a jira ticket ticket id\n' +
-		'example: ubl -b 31019\n' +
-		'example: ubl -b UB-31019'
+		'\t\t\t\t\texample: ubl -b 31019\n' +
+		'\t\t\t\t\texample: ubl -b UB-31019'
 	);
 
 program.parse(process.argv);
 run({
 	options: program.opts()
+}).catch(e => {
+	console.error(e.message);
 });
 
 

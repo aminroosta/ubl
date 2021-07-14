@@ -51,7 +51,15 @@ async function create_jira_branch({ issue_id }) {
 	await git.checkout('develop');
 	await git.pull('origin', 'develop');
 
-	console.log({ branch });
+	try {
+		await git.checkout(['-b', branch, 'origin/develop', '--no-track']);
+	} catch(e) {
+		if(e.message.includes(`branch named '${branch}' already exists`)) {
+			await git.checkout(branch);
+		} else {
+			throw e;
+		}
+	}
 }
 
 module.exports = {
