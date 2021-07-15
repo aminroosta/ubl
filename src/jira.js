@@ -3,9 +3,7 @@ const localStorage = require('./localstorage.js');
 const { get_credentials } = require('./prompts.js');
 const { JIRA } = require('./constants.js');
 const simpleGit = require('simple-git');
-// const debug = require('debug');
 
-// debug.enable('simple-git:output:*');
 const git = simpleGit().outputHandler((bin, stdout, stderr, args) => {
 	stdout.pipe(process.stdout);
 	stderr.pipe(process.stderr);
