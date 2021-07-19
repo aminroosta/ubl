@@ -29,6 +29,9 @@ Options:
         - example: ubl -c              (infers the message from branch name)
         - example: ubl -c "message"    (updates message if staging is empty)
 
+  -f, --force-push
+        force push current branch, and print the MR url
+
   -h, --help                       display help for command
 ```
 

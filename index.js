@@ -4,7 +4,7 @@ const { program } = require('commander');
 const { create_jira_branch } = require('./src/jira.js');
 const localStorage = require('./src/localstorage.js');
 const { JIRA } = require('./src/constants.js');
-const { commit_and_squash } = require('./src/gitlab.js');
+const { commit_and_squash, force_push } = require('./src/gitlab.js');
 
 async function run({ options }) {
 	if(options.reset) {
@@ -16,6 +16,9 @@ async function run({ options }) {
 	}
 	else if(options.commit) {
         await commit_and_squash({ message: options.commit });
+	}
+	else if(options.forcePush) {
+        await force_push();
 	} else {
 		console.log(program.help());
 	}
@@ -41,6 +44,10 @@ program
         '\tuses the the jira issue title if no message is given.\n' +
 		'\t- example: ubl -c              (infers the message from branch name)\n' +
 		'\t- example: ubl -c "message"    (updates message if staging is empty)\n'
+    )
+	.option('-f, --force-push',
+        '\n' +
+        '\tforce push current branch, and print the MR url\n'
     )
 ;
 
