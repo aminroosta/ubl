@@ -23,9 +23,9 @@ Options:
         - example: ubl -b 31019        (the "UB-" prefix is optional)
 
   -c, --commit [optional message]
-        commit whatever is in staging, with an optional message.
-        adds --amend if there is an existing commit.
+        commits whatever is in staging, with an optional message.
         uses the the jira issue title if no message is given.
+        adds --amend if there is an existing commit.
         - example: ubl -c              (infers the message from branch name)
         - example: ubl -c "message"    (updates message if staging is empty)
 

@@ -39,9 +39,9 @@ program
 	)
 	.option('-c, --commit [optional message]',
         '\n' +
-        '\tcommit whatever is in staging, with an optional message.\n' +
-        '\tadds --amend if there is an existing commit.\n' +
+        '\tcommits whatever is in staging, with an optional message.\n' +
         '\tuses the the jira issue title if no message is given.\n' +
+        '\tadds --amend if there is an existing commit.\n' +
 		'\t- example: ubl -c              (infers the message from branch name)\n' +
 		'\t- example: ubl -c "message"    (updates message if staging is empty)\n'
     )
