@@ -34,6 +34,7 @@ program
 		'-b, --branch <jira_ticket_id>',
         '\n' +
 		'\tcreates a feature branch from a jira ticket ticket id.\n' +
+        '\tif the branch exists, it does a simple checkout.\n' +
 		'\t- example: ubl -b UB-31019     (infers branch from jira ticket title)\n' +
 		'\t- example: ubl -b 31019        (the "UB-" prefix is optional)\n'
 	)

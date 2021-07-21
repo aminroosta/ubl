@@ -19,6 +19,7 @@ Options:
 
   -b, --branch <jira_ticket_id>
         creates a feature branch from a jira ticket ticket id.
+        if the branch exists, it does a simple checkout.
         - example: ubl -b UB-31019     (infers branch from jira ticket title)
         - example: ubl -b 31019        (the "UB-" prefix is optional)
 
