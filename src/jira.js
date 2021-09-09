@@ -46,6 +46,8 @@ async function create_jira_branch({ issue_id }) {
     .replace(/\(/g, " ")
     .replace(/\)/g, " ")
     .replace(/#/g, " ")
+    .replace(/\\./g, " ")
+    .replace(/,/g, " ")
     .replace(/\s+/g, "_");
   const branch = `feature/${issue.key}_${summary}`;
 
