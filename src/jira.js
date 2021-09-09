@@ -43,7 +43,12 @@ async function get_issue({ issue_id }) {
 async function create_jira_branch({ issue_id }) {
 
 	const issue = await get_issue({ issue_id });
-	const summary = issue.fields.summary.replace(/\s+/g, '-');
+	const summary = issue.fields.summary
+	a.replace(/-/g, ' ')
+	.replace(/\(/g, ' ')
+	.replace(/\)/g, ' ')
+	.replace(/#/g, ' ')
+	.replace(/\s+/g, '_');
 	const branch = `feature/${issue.key}_${summary}`;
 
 	await git.checkout('develop');
