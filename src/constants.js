@@ -1,3 +1,3 @@
 module.exports = {
-    JIRA: 'jira',
+  JIRA: "jira",
 };
