@@ -1,8 +1,9 @@
 const JiraApi = require("jira-client");
 const localStorage = require("./localstorage.js");
 const { get_credentials } = require("./prompts.js");
-const { JIRA } = require("./constants.js");
+const { JIRA, BRANCH_PREFIX } = require("./constants.js");
 const simpleGit = require("simple-git");
+const { AutoComplete } = require('enquirer');
 
 const git = simpleGit().outputHandler((bin, stdout, stderr, args) => {
   stdout.pipe(process.stdout);
@@ -32,30 +33,48 @@ async function get_issue({ issue_id }) {
 
   // normalize the issue_id if it's a number
   if (issue_id * 1 == issue_id) {
-    issue_id = `UB-${issue_id}`;
+    issue_id = `${BRANCH_PREFIX}-${issue_id}`;
   }
 
   const issue = await jira.findIssue(issue_id);
   return issue;
 }
 
+async function choose_remote_branch({ message }) {
+  const branches = (await git.branch([ "-r" ])).all;
+
+  const prompt = new AutoComplete({
+    name: 'branch',
+    message: message,
+    limit: 15,
+    initial: branches.indexOf('origin/develop'),
+    choices: [...branches]
+  });
+  const branch = await prompt.run();
+  return branch;
+}
+
 async function create_jira_branch({ issue_id }) {
   const issue = await get_issue({ issue_id });
   const summary = issue.fields.summary
+    .replace(/FE -/g, " ")
     .replace(/-/g, " ")
     .replace(/\(/g, " ")
     .replace(/\)/g, " ")
     .replace(/#/g, " ")
     .replace(/\./g, " ")
     .replace(/,/g, " ")
-    .replace(/\s+/g, "_");
-  const branch = `feature/${issue.key}_${summary}`;
+    .trim()
+    .replace(/\s+/g, "-");
 
-  await git.checkout("develop");
-  await git.pull("origin", "develop");
+
+  await git.fetch(["origin"]);
+  const source_branch = await choose_remote_branch({ message: "what is the source branch?" });
+  const type = source_branch === "origin/main" ? "hotfix" : "feature";
+  const branch = `${type}/${issue.key}_${summary}`;
 
   try {
-    await git.checkout(["-b", branch, "origin/develop", "--no-track"]);
+    await git.checkout(["-b", branch, source_branch, "--no-track"]);
   } catch (e) {
     if (e.message.includes(`branch named '${branch}' already exists`)) {
       await git.checkout(branch);
@@ -66,6 +85,7 @@ async function create_jira_branch({ issue_id }) {
 }
 
 module.exports = {
+  choose_remote_branch,
   get_issue,
   create_jira_branch,
 };

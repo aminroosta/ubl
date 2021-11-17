@@ -3,8 +3,8 @@
 const { program } = require("commander");
 const { create_jira_branch } = require("./src/jira.js");
 const localStorage = require("./src/localstorage.js");
-const { JIRA } = require("./src/constants.js");
-const { commit_and_squash, force_push } = require("./src/gitlab.js");
+const { JIRA, BRANCH_PREFIX } = require("./src/constants.js");
+const { commit_add, force_push } = require("./src/gitlab.js");
 
 async function run({ options }) {
   if (options.reset) {
@@ -13,7 +13,7 @@ async function run({ options }) {
   } else if (options.branch) {
     await create_jira_branch({ issue_id: options.branch });
   } else if (options.commit) {
-    await commit_and_squash({ message: options.commit });
+    await commit_add({ message: options.commit });
   } else if (options.forcePush) {
     await force_push();
   } else {
@@ -28,8 +28,8 @@ program
     "\n" +
       "\tcreates a feature branch from a jira ticket ticket id.\n" +
       "\tif the branch exists, it does a simple checkout.\n" +
-      "\t- example: ubl -b UB-31019     (infers branch from jira ticket title)\n" +
-      '\t- example: ubl -b 31019        (the "UB-" prefix is optional)\n'
+      `\t- example: ubl -b ${BRANCH_PREFIX}-31019     (infers branch from jira ticket title)\n` +
+      `\t- example: ubl -b 31019        (the "${BRANCH_PREFIX}-" prefix is optional)\n`
   )
   .option(
     "-c, --commit [optional message]",
