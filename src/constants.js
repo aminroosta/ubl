@@ -1,4 +1,4 @@
 module.exports = {
   JIRA: "jira",
-  BRANCH_PREFIX: "LIS",
+  BRANCH_PREFIX: "NMA",
 };

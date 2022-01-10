@@ -23,11 +23,14 @@ async function commit_add({ message }) {
 
 async function force_push() {
   const branch = await git.revparse(["--abbrev-ref", "HEAD"]);
-  const issue_id = branch.split(/(-|_)/g)[2];
-  if ((issue_id | 0) != issue_id) {
-    console.error(`SKIPPED: issue id must be number, found: ${issue_id}`);
+  const issue_id = branch.split(/(_|\/)/g)[2];
+
+  const [prefix, id, ...rest] = issue_id.split('-');
+  if ((id | 0) != id || prefix.length !== 3 || rest.length > 0) {
+    console.error(`SKIPPED: invalid issue id, found: ${issue_id}`);
     return;
   }
+
   const issue = await get_issue({ issue_id });
 
   await git.raw(["push", "-u", "origin", `+${branch}`]);
